@@ -38,11 +38,19 @@ public class TypeConverterUtil {
         }
 
         if (targetType == Integer.class || targetType == int.class) {
-            return Integer.parseInt(value.toString());
+            return new IntegerType(Integer.parseInt(value.toString()));
+        }
+
+        if(targetType == IntegerType.class){
+            return new IntegerType((Integer) value);
         }
 
         if (targetType == Double.class || targetType == double.class) {
             return Double.parseDouble(value.toString());
+        }
+
+        if(targetType == DecimalType.class || targetType == float.class){
+            return new DecimalType((Double) value);
         }
 
         if (targetType == Boolean.class || targetType == boolean.class) {
@@ -71,8 +79,7 @@ public class TypeConverterUtil {
             return CodeableConceptConversionHelper.createCodeableConcept(value , targetFieldName); // Pass the Field object
         }
 
-//        if(Type.class.isAssignableFrom(targetType)){
-            if(Type.class == targetType){
+        if(Type.class == targetType){
             return handlePolymorphicType(value , givenDataType);
         }
 
@@ -91,7 +98,7 @@ public class TypeConverterUtil {
         throw new IllegalArgumentException("Cannot convert value to " + targetType.getName());
     }
 
-    private static Object handleDate(Object value) throws Exception {
+    public static Type handleDate(Object value) throws Exception {
 
         if( value instanceof String){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -142,6 +149,41 @@ public class TypeConverterUtil {
                 } else {
                     throw new IllegalArgumentException(
                             "Invalid value type for DateTimeType. Expected String or Date but got: " + value.getClass().getName()
+                    );
+                }
+
+            case "String":
+            case "StringType":
+                if(value instanceof String || value instanceof StringType){
+                    return  new StringType((String)value);
+                }
+                else {
+                    throw new IllegalArgumentException(
+                            "Invalid value type for Integer. Expected int or Integer type but got: " + value.getClass().getName()
+                    );
+                }
+
+            case "Integer":
+            case "int":
+            case "IntegerType":
+                if(value instanceof Integer){
+                    return  new IntegerType((Integer)value);
+                }
+                else {
+                    throw new IllegalArgumentException(
+                            "Invalid value type for Integer. Expected int or Integer type but got: " + value.getClass().getName()
+                    );
+                }
+
+            case "Double":
+            case "double":
+            case "DecimalType":
+                if(value instanceof Double || value instanceof DecimalType){
+                    return new DecimalType(Double.valueOf(value.toString()));
+                }
+                else {
+                    throw new IllegalArgumentException(
+                            "Invalid value type for Double. Expected int or Integer type but got: " + value.getClass().getName()
                     );
                 }
 

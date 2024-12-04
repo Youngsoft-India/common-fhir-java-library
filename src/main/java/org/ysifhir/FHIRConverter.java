@@ -2,10 +2,12 @@ package org.ysifhir;
 
 import ca.uhn.fhir.context.FhirContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hl7.fhir.dstu3.model.DomainResource;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.ysifhir.utils.TypeConverterUtil;
+import org.ysifhir.utils.helpers.ExtensionConverterHelper;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -21,8 +23,7 @@ public class FHIRConverter {
         config = mapper.readValue(jsonConfig, Map.class);
     }
 
-        public String toFHIR(Object sourceObj) throws Exception {
-
+        public Object toFHIR(Object sourceObj , String resultType) throws Exception {
 
             // Dynamically load classes
             String sourceClassName = (String) config.get("clientClass");
@@ -75,10 +76,23 @@ public class FHIRConverter {
                 targetField.set(targetObj, convertedValue);
             }
 
-            // Convert FHIR object to JSON string
-            FhirContext fhirContext = FhirContext.forDstu3();
-            String jsonString = fhirContext.newJsonParser().encodeResourceToString((IBaseResource) targetObj);
+            // if extension exists
+            List<Map<String, Object>> extension = (List<Map<String, Object>>) config.get("extension");
+            if (extension != null && !extension.isEmpty()) {
+                ExtensionConverterHelper.addExtensionsDynamically((DomainResource) targetObj, extension , sourceClass , sourceObj);
+            }
 
-            return jsonString;
+            // Convert FHIR object based on resultType
+            FhirContext fhirContext = FhirContext.forDstu3();
+            if (resultType != null && !resultType.isEmpty()) {
+                if (resultType.equalsIgnoreCase("json")) {
+                    return fhirContext.newJsonParser().encodeResourceToString((IBaseResource) targetObj);
+                } else if (resultType.equalsIgnoreCase("xml")) {
+                    return fhirContext.newXmlParser().encodeResourceToString((IBaseResource) targetObj);
+                }
+            }
+
+            // Return target object directly if resultType is empty or null
+            return targetObj;
         }
 }
