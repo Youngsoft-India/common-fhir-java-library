@@ -5,10 +5,23 @@ import org.hl7.fhir.dstu3.model.Enumeration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.ysifhir.FHIRConverter;
+import org.ysifhir.constants.FHIRConstants;
 
+/**
+ * A utility class for handling the conversion of enumeration values to FHIR DSTU3 `Enumeration` objects.
+ */
 public class EnumerationConversionHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(EnumerationConversionHelper.class);
+
+    /**
+     * Converts a given value to a FHIR DSTU3 `Enumeration` object based on the specified data type.
+     *
+     * @param value         The value to be converted, which should match an enumeration constant in the target type.
+     * @param givenDataType The name of the FHIR enumeration data type (e.g., "ContactPointSystem").
+     * @return An instance of `Enumeration` containing the converted value.
+     * @throws Exception If an error occurs during the conversion process, such as missing classes or invalid values.
+     */
     public static Object handleEnumeration(Object value, String givenDataType) throws Exception {
 
         if (value == null) {
@@ -17,8 +30,8 @@ public class EnumerationConversionHelper {
         try {
 
             // Load EnumFactory and Enum from DSTU3
-            String enumFactoryClassName = "org.hl7.fhir.dstu3.model.codesystems." + givenDataType + "EnumFactory";
-            String enumClassName = "org.hl7.fhir.dstu3.model.codesystems." + givenDataType;
+            String enumFactoryClassName = FHIRConstants.HAPI_CODESYSTEMS_CLASS_PATH + givenDataType + FHIRConstants.HAPI_ENUM_FACTORY_CLASS_NAME;
+            String enumClassName = FHIRConstants.HAPI_CODESYSTEMS_CLASS_PATH + givenDataType;
 
             Class<?> enumFactoryClass = Class.forName(enumFactoryClassName);
             Object enumFactory = enumFactoryClass.getDeclaredConstructor().newInstance();

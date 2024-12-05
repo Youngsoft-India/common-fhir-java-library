@@ -3,6 +3,7 @@ package org.ysifhir.utils.helpers;
 import org.hl7.fhir.dstu3.model.DomainResource;
 import org.hl7.fhir.dstu3.model.Extension;
 import org.hl7.fhir.dstu3.model.Type;
+import org.ysifhir.constants.JsonConfigConstants;
 import org.ysifhir.utils.common.CommonUtil;
 
 import java.lang.reflect.Field;
@@ -20,7 +21,7 @@ public class ExtensionConverterHelper {
     public static void addExtensionsDynamically(DomainResource targetObj, List<Map<String, Object>> extensions, Class<?> sourceClass, Object sourceObj) throws Exception {
         for (Map<String, Object> extensionConfig : extensions) {
             Extension extension = new Extension();
-            String urlFieldName = (String) extensionConfig.get("url");
+            String urlFieldName = (String) extensionConfig.get(JsonConfigConstants.URL_EXTENSION_KEY);
             extension.setUrl(getUrlFieldValue(urlFieldName , sourceClass ,sourceObj));
 
             // Check for nested extensions
@@ -37,7 +38,7 @@ public class ExtensionConverterHelper {
             } else {
                 // Add primitive value
                 Object value = getPrimitiveValue(extensionConfig, sourceClass, sourceObj);
-                String dataType = (String) extensionConfig.get("dataType");
+                String dataType = (String) extensionConfig.get(JsonConfigConstants.DATA_TYPE_KEY);
                 if (value != null) {
                     extension.setValue((Type) CommonUtil.convertPrimitiveType(value, dataType));
                 }
@@ -56,7 +57,7 @@ public class ExtensionConverterHelper {
      */
     private static Extension createExtension(Map<String, Object> extensionConfig, Class<?> sourceClass, Object sourceObj) throws Exception {
         Extension extension = new Extension();
-        String urlFieldName = (String) extensionConfig.get("url");
+        String urlFieldName = (String) extensionConfig.get(JsonConfigConstants.URL_EXTENSION_KEY);
         extension.setUrl(getUrlFieldValue(urlFieldName , sourceClass ,sourceObj));
 
         // Handle nested extensions
@@ -72,7 +73,7 @@ public class ExtensionConverterHelper {
         } else {
             // Add primitive value
             Object value = getPrimitiveValue(extensionConfig, sourceClass, sourceObj);
-            String dataType = (String) extensionConfig.get("dataType");
+            String dataType = (String) extensionConfig.get(JsonConfigConstants.DATA_TYPE_KEY);
             if (value != null) {
                 extension.setValue((Type) CommonUtil.convertPrimitiveType(value, dataType));
             }
@@ -90,7 +91,7 @@ public class ExtensionConverterHelper {
      * @return The value of the field, or null if not found.
      */
     private static Object getPrimitiveValue(Map<String, Object> extensionConfig, Class<?> sourceClass, Object sourceObj) throws Exception {
-        String fromField = (String) extensionConfig.get("value");
+        String fromField = (String) extensionConfig.get(JsonConfigConstants.VALUE_EXTENSION_KEY);
         if (fromField != null) {
             Field sourceField = sourceClass.getDeclaredField(fromField);
             sourceField.setAccessible(true);
@@ -99,6 +100,16 @@ public class ExtensionConverterHelper {
         return null;
     }
 
+    /**
+     * Retrieves the value of a URL field from a given source object.
+     *
+     * @param urlFieldName The name of the field in the source class that contains the URL value.
+     * @param sourceClass  The class of the source object being inspected.
+     * @param sourceObj    The source object from which the field value is extracted.
+     * @return The value of the URL field as a String.
+     * @throws NoSuchFieldException   If the specified field name does not exist in the source class.
+     * @throws IllegalAccessException If the field cannot be accessed due to Java access control.
+     */
     private static String getUrlFieldValue(String urlFieldName , Class<?> sourceClass ,Object sourceObj) throws NoSuchFieldException, IllegalAccessException {
         Field sourceField = sourceClass.getDeclaredField(urlFieldName);
         sourceField.setAccessible(true);

@@ -2,6 +2,7 @@ package org.ysifhir.utils.helpers;
 
 import org.hl7.fhir.dstu3.model.CodeableConcept;
 import org.hl7.fhir.dstu3.model.Coding;
+import org.ysifhir.constants.FHIRConstants;
 
 public class CodeableConceptConversionHelper {
 
@@ -24,7 +25,7 @@ public class CodeableConceptConversionHelper {
      */
     public static String getSystemUrl(String fieldType) {
         // Base URL for HL7 v3 codes
-        String baseUrl = "http://hl7.org/fhir/v3/";
+        String baseUrl = FHIRConstants.HAPI_CODESYSTEMS_BASE_URL;
 
         // Convert the field type to PascalCase
         String pascalCaseFieldType = convertFieldTypeInPascalCase(fieldType);
