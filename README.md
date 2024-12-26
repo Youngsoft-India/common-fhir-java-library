@@ -24,7 +24,7 @@ To use this library, ensure you have the following:
 
 - Java 8 or higher.
 - A working Java project (Maven/Gradle).
-- **HAPI FHIR** library (provided as a dependency in this project).
+- **HAPI FHIR** library (provided as a dependency in this project).  (artifactId: **hapi-fhir-structures-r5**)
 - jackson-databind library.
 - A valid JSON configuration file that defines how to map your Java fields to FHIR fields.
 
