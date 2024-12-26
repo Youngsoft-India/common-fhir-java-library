@@ -10,11 +10,18 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-structures-dstu3 -->
+<!--        <dependency>-->
+<!--            <groupId>ca.uhn.hapi.fhir</groupId>-->
+<!--            <artifactId>hapi-fhir-structures-dstu3</artifactId>-->
+<!--            <version>7.4.5</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-structures-r5 -->
         <dependency>
             <groupId>ca.uhn.hapi.fhir</groupId>
-            <artifactId>hapi-fhir-structures-dstu3</artifactId>
-            <version>7.4.5</version>
+            <artifactId>hapi-fhir-structures-r5</artifactId>
+            <version>7.6.1</version>
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>

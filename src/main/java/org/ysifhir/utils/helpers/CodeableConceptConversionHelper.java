@@ -1,7 +1,8 @@
 package org.ysifhir.utils.helpers;
 
-import org.hl7.fhir.dstu3.model.CodeableConcept;
-import org.hl7.fhir.dstu3.model.Coding;
+import org.hl7.fhir.r5.model.CodeableConcept;
+import org.hl7.fhir.r5.model.Coding;
+
 import org.ysifhir.constants.FHIRConstants;
 
 public class CodeableConceptConversionHelper {

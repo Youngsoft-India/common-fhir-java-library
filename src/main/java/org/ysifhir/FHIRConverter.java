@@ -3,9 +3,9 @@ package org.ysifhir;
 import ca.uhn.fhir.context.FhirContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.hl7.fhir.dstu3.model.DomainResource;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 
+import org.hl7.fhir.r5.model.DomainResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

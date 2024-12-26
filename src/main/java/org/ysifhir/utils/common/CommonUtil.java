@@ -1,7 +1,8 @@
 package org.ysifhir.utils.common;
 
-import org.hl7.fhir.dstu3.model.*;
+import org.hl7.fhir.r5.model.*;
 
+import org.hl7.fhir.r5.model.DataType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class CommonUtil {
      * @return The converted FHIR `Type` object.
      * @throws Exception If the conversion fails.
      */
-    public static Type convertPrimitiveType(Object value, String targetType) throws Exception {
+    public static DataType convertPrimitiveType(Object value, String targetType) throws Exception {
         if (value == null) {
             // Handle null values properly
             logger.info("Received null value for conversion to target type: " + targetType);
@@ -101,7 +102,7 @@ public class CommonUtil {
      * @return A `DateType` object.
      * @throws Exception If the value is of an unsupported type or cannot be parsed.
      */
-    public static Type handleDate(Object value) throws Exception {
+    public static DateType handleDate(Object value) throws Exception {
 
         if( value instanceof String){
             SimpleDateFormat sdf = new SimpleDateFormat(FHIRConstants.DATE_FORMAT);
@@ -144,7 +145,7 @@ public class CommonUtil {
      * @return A corresponding FHIR `Type` object.
      * @throws Exception If the conversion fails or the type is unsupported.
      */
-    public static Type handlePolymorphicType(Object value, String givenDataType) throws Exception {
+    public static DataType handlePolymorphicType(Object value, String givenDataType) throws Exception {
         if (value == null) {
             throw new IllegalArgumentException("Value is null for field.");
         }

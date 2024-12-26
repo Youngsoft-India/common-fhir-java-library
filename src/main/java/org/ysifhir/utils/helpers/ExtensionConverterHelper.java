@@ -1,8 +1,8 @@
 package org.ysifhir.utils.helpers;
 
-import org.hl7.fhir.dstu3.model.DomainResource;
-import org.hl7.fhir.dstu3.model.Extension;
-import org.hl7.fhir.dstu3.model.Type;
+import org.hl7.fhir.r5.model.DomainResource;
+import org.hl7.fhir.r5.model.Extension;
+
 import org.ysifhir.constants.JsonConfigConstants;
 import org.ysifhir.utils.common.CommonUtil;
 
@@ -40,7 +40,7 @@ public class ExtensionConverterHelper {
                 Object value = getPrimitiveValue(extensionConfig, sourceClass, sourceObj);
                 String dataType = (String) extensionConfig.get(JsonConfigConstants.DATA_TYPE_KEY);
                 if (value != null) {
-                    extension.setValue((Type) CommonUtil.convertPrimitiveType(value, dataType));
+                    extension.setValue( CommonUtil.convertPrimitiveType(value, dataType));
                 }
             }
 
@@ -75,7 +75,7 @@ public class ExtensionConverterHelper {
             Object value = getPrimitiveValue(extensionConfig, sourceClass, sourceObj);
             String dataType = (String) extensionConfig.get(JsonConfigConstants.DATA_TYPE_KEY);
             if (value != null) {
-                extension.setValue((Type) CommonUtil.convertPrimitiveType(value, dataType));
+                extension.setValue(CommonUtil.convertPrimitiveType(value, dataType));
             }
         }
 
