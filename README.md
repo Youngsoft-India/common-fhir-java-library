@@ -162,4 +162,4 @@ Edit the JSON configuration file to fit your own Java class fields. Each from fi
 Once the setup is done, you can convert your Java object into a FHIR resource by calling the toFHIR method of the FHIRConverter. The method will return the FHIR resource in JSON format.
 
 ### 9. Documentation link : 
-[Link Text](https://docs.google.com/document/d/1gygV8kkMBjwDhr1UVIjw7xUrdSlVKpJuYLZAbNQ_Guo/edit?usp=sharing)
+[Documentation](https://docs.google.com/document/d/1gygV8kkMBjwDhr1UVIjw7xUrdSlVKpJuYLZAbNQ_Guo/edit?usp=sharing)
