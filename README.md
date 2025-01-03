@@ -24,7 +24,7 @@ To use this library, ensure you have the following:
 
 - Java 8 or higher.
 - A working Java project (Maven/Gradle).
-- **HAPI FHIR** library (provided as a dependency in this project).
+- **HAPI FHIR** library (provided as a dependency in this project).  (artifactId: **hapi-fhir-structures-r5**)
 - jackson-databind library.
 - A valid JSON configuration file that defines how to map your Java fields to FHIR fields.
 
@@ -160,3 +160,6 @@ Edit the JSON configuration file to fit your own Java class fields. Each from fi
 ### 8. Converting Java Object to FHIR
 
 Once the setup is done, you can convert your Java object into a FHIR resource by calling the toFHIR method of the FHIRConverter. The method will return the FHIR resource in JSON format.
+
+### 9. Documentation link : 
+[Documentation](https://docs.google.com/document/d/1gygV8kkMBjwDhr1UVIjw7xUrdSlVKpJuYLZAbNQ_Guo/edit?usp=sharing)
